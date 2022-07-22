@@ -1,0 +1,55 @@
+- Priority ascending
+
+expression                  : KEYWORD:VAR IDENT EQUALS expression
+                            : comparison-expression ((KEYWORD:AND|KEYWORD|OR) comparison-expression)*
+                    
+comparison-expression       : NOT comparison-expression
+                            : arithmetic-expression ((EE|NE|LT|GT|LTE|GTE) arithmetic-expression)*
+
+arithmetic-expression       : term ((PLUS|MINUS) term)*
+
+term                        : factor ((MULT|DIV) factor)*
+
+factor                      : (PLUS|MINUS) factor
+                            : power
+
+power                       : atom (POW factor)*
+
+atom                        : INT|FLOAT|IDENT
+                            : LPAREN expression RPAREN
+                            : if-expression
+
+if-expression               : KEYWORD:IF expression KEYWORD:THEN expression (KEYWORD:ELSEIF expression KEYWORD:THEN expression)* (KEYWORD:ELSE expression)?
+
+If brainstorming:
+if (a == 1) var b = 5 ? (a == 2) var b = 10 ? var b = 20 
+if (a == 1) var b = 5 elseif (a == 2) var b = 10 else var b = 20
+if (a == 1) { var b = 5 } elseif (a == 2) { var b = 10 } else { var b = 20 }
+if (a == 1) var b = 5, (a == 2) var b = 10, var b = 20;
+
+if a == 1 then var b = 5 elseif a == 2 then var b = 10 else var b = 20
+
+if a == 1
+    then var b = 5
+elseif a == 2
+    then var b = 10
+else
+    var b = 20
+
+if a == 1 >> var b = 5; ? a == 2 >> var b = 10; else var b = 20
+
+if a == 1 >>
+    var b = 5;
+? a == 2 >>
+    var b = 10;
+else
+    var b = 20
+
+if a == 1: var b = 5; ? a == 2: var b = 10; else: var b = 20
+
+if a == 1:
+    var b = 5
+elseif a == 2:
+    var b = 10
+else
+    var b = 20

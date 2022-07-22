@@ -1,0 +1,19 @@
+- Priority ascending
+
+expression                  : KEYWORD:VAR IDENT EQUALS expression
+                            : comparison-expression ((KEYWORD:AND|KEYWORD|OR) comparison-expression)*
+                    
+comparison-expression       : NOT comparison-expression
+                            : arithmetic-expression ((EE|NE|LT|GT|LTE|GTE) arithmetic-expression)*
+
+arithmetic-expression       : term ((PLUS|MINUS) term)*
+
+term                        : factor ((MULT|DIV) factor)*
+
+factor                      : (PLUS|MINUS) factor
+                            : power
+
+power                       : atom (POW factor)*
+
+atom                        : INT|FLOAT|IDENT
+                            : LPAREN expression RPAREN
